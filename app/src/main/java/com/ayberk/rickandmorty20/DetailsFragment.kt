@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.ayberk.rickandmorty20.databinding.FragmentDetailsBinding
 import com.ayberk.rickandmorty20.databinding.FragmentHomeBinding
@@ -24,6 +26,7 @@ class DetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomePageViewModel by viewModels()
     lateinit var characterDetailList : com.ayberk.rickandmorty20.models.Result
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +40,10 @@ class DetailsFragment : Fragment() {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
         fetchCharacters()
+        navController = Navigation.findNavController(requireActivity(),id)
+
         binding.backbtn.setOnClickListener {
-            findNavController().navigate(R.id.homeFragment)
+            navController.popBackStack()
         }
         var last=""
         viewModel.getObserverLiveData().observe(viewLifecycleOwner, object : Observer<Character> {

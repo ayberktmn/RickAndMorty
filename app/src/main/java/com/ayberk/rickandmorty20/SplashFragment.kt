@@ -39,7 +39,7 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-                 val action = SplashFragmentDirections.actionSplashFragmentToHomeFragment(-1)
+                 val action = SplashFragmentDirections.actionSplashFragmentToHomeFragment(0)
                 findNavController().navigate(action)
 
 

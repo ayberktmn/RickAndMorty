@@ -2,6 +2,7 @@ package com.ayberk.rickandmorty20
 
 import android.app.ProgressDialog
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -50,7 +51,7 @@ class HomeFragment : Fragment() {
             sessionManager.setIsFirstRun(false)
 
         initRecyclerViews()
-        fetchCharacters()
+        fetchCharacters(0)
 
 
 
@@ -73,14 +74,34 @@ class HomeFragment : Fragment() {
             }
 
         })
-
+        var charId = 0
         viewModel.getLocationData().observe(viewLifecycleOwner, object : Observer<com.ayberk.rickandmorty20.models.LocationX> {
             override fun onChanged(t: com.ayberk.rickandmorty20.models.LocationX?) {
 
                 if (t != null) {
+                    arguments?.let {
+
+                        val locationPosition = HomeFragmentArgs.fromBundle(it).locationId
+                        locationList = t.results[locationPosition]
+                        for (residentUrl in t.results[locationPosition].residents) {
+                            val uri = Uri.parse(residentUrl)
+                            val id = uri.lastPathSegment
+                            println(id)
+                        }
+
+                        if (charId < locationPosition) {
+                            fetchCharacters(locationPosition)
+                            charId = locationPosition
+
+                        }
+                    }
+
                     locationAdapter.setLists(t.results)
+
                     println(t)
                 }
+
+
             }
         })
 
@@ -105,16 +126,16 @@ class HomeFragment : Fragment() {
     }
 
 
-    fun fetchCharacters() {
+    fun fetchCharacters(charId : Int) {
         CoroutineScope(Dispatchers.Main).launch {
 
             val job1: Deferred<Unit> = async {
-                viewModel.loadCharacterData("1")
+                viewModel.loadCharacterData("")
 
             }
             val job2: Deferred<Unit> = async {
 
-                viewModel.loadLocationData("1")
+                viewModel.loadLocationData("")
             }
             job1.await()
             job2.await()

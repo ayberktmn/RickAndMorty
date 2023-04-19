@@ -3,6 +3,7 @@ package com.ayberk.rickandmortyy.di.retrofit
 
 import com.ayberk.rickandmorty20.models.*
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RetrofitServiceInstance {
