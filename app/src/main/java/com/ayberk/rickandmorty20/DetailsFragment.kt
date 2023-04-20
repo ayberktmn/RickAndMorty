@@ -9,12 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.ayberk.rickandmorty20.databinding.FragmentDetailsBinding
 import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacter
 import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacterItem
 import com.ayberk.rickandmorty20.viewmodel.CharacterDetailsViewModel
-import com.ayberk.rickandmorty20.viewmodel.HomePageViewModel
-
 
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +27,7 @@ class DetailsFragment : Fragment() {
     private val viewModel: CharacterDetailsViewModel by viewModels()
     lateinit var characterDetailList : SingilurCharacterItem
     private lateinit var navController: NavController
+    private val argument: DetailsFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,45 +43,45 @@ class DetailsFragment : Fragment() {
 
         navController = Navigation.findNavController(requireActivity(),id)
 
-
+            binding.txtName.text = argument.args.name
+            binding.txtGender.text = argument.args.gender
+            binding.txtStatus.text = argument.args.status
+            binding.txtOrigin.text = argument.args.origin
+            binding.txtSpecy.text = argument.args.species
+            binding.txtLocation.text = argument.args.location
+            val dateTime = argument.args.created
+            val time = dateTime.substring(11, 19)
+            binding.txtCreadet.text = argument.args.created.take(10) + ", " + time
+            binding.txtEpisodes.text = argument.args.episode
+            .map { it.split("/")[5] }
+            .joinToString(separator = " ")
+             var into = Glide.with(binding.imageChrtrs)
+            .load(argument.args.image)
+            .into(binding.imageChrtrs)
 
         binding.backbtn.setOnClickListener {
             navController.popBackStack()
         }
         var last=""
-        viewModel.getObserverLiveData().observe(viewLifecycleOwner, object : Observer<SingilurCharacter> {
+       /* viewModel.getObserverLiveData().observe(viewLifecycleOwner, object : Observer<SingilurCharacter> {
 
             override fun onChanged(t: SingilurCharacter?) {
 
                 if (t != null) {
 
-                    arguments?.let {
-
-                        val position = DetailsFragmentArgs.fromBundle(it).characterPosition
-
-                        characterDetailList = t[position]
-
-                            binding.txtStatus.text = characterDetailList.status
+                        binding.txtStatus.text = characterDetailList.status
                         binding.txtGender.text = characterDetailList.gender
                         binding.txtSpecy.text = characterDetailList.species
                         binding.txtName.text = characterDetailList.name
                         binding.txtOrigin.text = characterDetailList.origin.name
                         binding.txtLocation.text = characterDetailList.location.name
-                        val dateTime = characterDetailList.created
-                        val time = dateTime.substring(11, 19)
-                        binding.txtCreadet.text = characterDetailList.created.take(10) + ", " + time
-                        binding.txtEpisodes.text = characterDetailList.episode
-                            .map { it.split("/")[5] }
-                            .joinToString(separator = " ")
-                        var into = Glide.with(binding.imageChrtrs)
-                            .load(characterDetailList.image)
-                            .into(binding.imageChrtrs)
 
-                    }
+
+
                 }
 
             }
-        })
+        }) */
 
         return view
     }

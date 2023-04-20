@@ -15,6 +15,7 @@ import com.ayberk.rickandmorty20.HomeFragmentDirections
 import com.ayberk.rickandmorty20.R
 import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacter
 import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacterItem
+import com.ayberk.rickandmorty20.models.DetailsArguments
 
 import com.bumptech.glide.Glide
 
@@ -30,9 +31,21 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.MyCustomHolder>(){
 
     override fun onBindViewHolder(holder: MyCustomHolder, position: Int) {
         holder.bind(liveData!!.get(position))
+        val args = DetailsArguments(
+            liveData!![position].name,
+            liveData!![position].status,
+            liveData!![position].image,
+            liveData!![position].gender,
+            liveData!![position].species,
+            liveData!![position].created,
+            liveData!![position].episode,
+            liveData!![position].origin.name,
+            liveData!![position].location.name,
+        )
         holder.chaimage.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(position)
-                holder.view.findNavController().navigate(action)
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(args)
+            holder.view.findNavController().navigate(action)
+
         }
     }
 

@@ -30,11 +30,11 @@
         android:id="@+id/detailsFragment"
         android:name="com.ayberk.rickandmorty20.DetailsFragment"
         android:label="DetailsFragment" >
-        <argument
-            android:name="characterPosition"
-            app:argType="integer" />
         <action
             android:id="@+id/action_detailsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="args"
+            app:argType="com.ayberk.rickandmorty20.models.DetailsArguments" />
     </fragment>
 </navigation>
