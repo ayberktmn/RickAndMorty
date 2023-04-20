@@ -1,9 +1,10 @@
-package com.ayberk.rickandmortyy.viewmodel
+package com.ayberk.rickandmorty20.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ayberk.rickandmorty20.models.*
-import com.ayberk.rickandmortyy.di.retrofit.RetrofitRepository
+import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacter
+import com.ayberk.rickandmorty20.retrofit.RetrofitRepository
+
 
 
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomePageViewModel @Inject constructor(private val repo: RetrofitRepository): ViewModel() {
 
-    var charactersList : MutableLiveData<com.ayberk.rickandmorty20.models.Character>
+    var charactersList : MutableLiveData<SingilurCharacter>
+
     var locationList : MutableLiveData<com.ayberk.rickandmorty20.models.LocationX>
 
 
@@ -21,11 +23,11 @@ class HomePageViewModel @Inject constructor(private val repo: RetrofitRepository
         locationList = MutableLiveData()
     }
 
-    fun getObserverLiveData() : MutableLiveData<com.ayberk.rickandmorty20.models.Character>{
+    fun getObserverLiveData() : MutableLiveData<SingilurCharacter>{
         return charactersList
     }
 
-    fun loadCharacterData(page:String){
+    fun loadCharacterData(page: String){
         repo.getCharacter(page,charactersList)
     }
     fun getLocationData() : MutableLiveData<com.ayberk.rickandmorty20.models.LocationX> {

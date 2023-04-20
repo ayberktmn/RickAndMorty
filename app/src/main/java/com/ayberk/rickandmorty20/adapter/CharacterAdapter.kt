@@ -1,5 +1,6 @@
 package com.ayberk.rickandmorty20.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ayberk.rickandmorty20.HomeFragment
 import com.ayberk.rickandmorty20.HomeFragmentDirections
 import com.ayberk.rickandmorty20.R
+import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacter
+import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacterItem
 
 import com.bumptech.glide.Glide
 
 class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.MyCustomHolder>(){
 
-    var liveData: List<com.ayberk.rickandmorty20.models.Result>? = null
+    var liveData: List<SingilurCharacterItem>? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyCustomHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.characters_item,parent,false)
@@ -26,11 +30,10 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.MyCustomHolder>(){
 
     override fun onBindViewHolder(holder: MyCustomHolder, position: Int) {
         holder.bind(liveData!!.get(position))
-        holder.chaimage?.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(position)
-            holder.view.findNavController().navigate(action)
+        holder.chaimage.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(position)
+                holder.view.findNavController().navigate(action)
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -52,7 +55,7 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.MyCustomHolder>(){
 
         //  val txtPopGenre = view.findViewById<TextView>(R.id.txtPopGenre)
 
-        fun bind(data:com.ayberk.rickandmorty20.models.Result) {
+        fun bind(data:SingilurCharacterItem) {
             txttitlepop.text = data.name
 
             var into = Glide.with(chaimage)
@@ -76,10 +79,11 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.MyCustomHolder>(){
             }
         }
     }
-    fun setLists(liveData: List<com.ayberk.rickandmorty20.models.Result>?) {
+    fun setLists(liveData: List<SingilurCharacterItem>?) {
         if (liveData != null) {
             this.liveData = liveData
             notifyDataSetChanged()
         }
     }
+
 }

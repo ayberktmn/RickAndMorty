@@ -1,7 +1,9 @@
-package com.ayberk.rickandmortyy.di.retrofit
+package com.ayberk.rickandmorty20.models.AnaCharacter
 
 
 import com.ayberk.rickandmorty20.models.*
+
+
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -9,8 +11,8 @@ import retrofit2.http.Query
 interface RetrofitServiceInstance {
 
 
-    @GET("character/")  // page= hangi sayı verilirse o sayfa açılır
-    fun getCharacter(@Query("page")query: String): retrofit2.Call<Character>
+    @GET("character/{id}")  // page= hangi sayı verilirse o sayfa açılır
+    fun getCharacter(@Path("id")page: String): retrofit2.Call<SingilurCharacter>
 
 
     @GET("location/")

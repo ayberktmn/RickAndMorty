@@ -30,7 +30,7 @@ class LocationAdapter: RecyclerView.Adapter<LocationAdapter.MyCustomHolder>(){
         holder.btnLocaiton.setOnClickListener {
             val action =  HomeFragmentDirections.actionHomeFragmentSelf(position)
             holder.view.findNavController().navigate(action)
-            println(position)
+           // println(position)
         }
 
     }

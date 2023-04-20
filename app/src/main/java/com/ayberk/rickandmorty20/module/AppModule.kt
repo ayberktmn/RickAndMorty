@@ -1,10 +1,10 @@
-package com.ayberk.rickandmortyy.di.module
+package com.ayberk.rickandmorty20.module
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.ayberk.rickandmorty20.models.AnaCharacter.RetrofitServiceInstance
 import com.ayberk.rickandmorty20.prefs.SessionManager
 import com.ayberk.rickandmorty20.util.Constants
-import com.ayberk.rickandmortyy.di.retrofit.RetrofitServiceInstance
 
 import dagger.Module
 import dagger.Provides
