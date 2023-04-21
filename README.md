@@ -9,6 +9,7 @@ Used technologies :  <br>
 - Okhttp
 - Gson
 - LiveData
+- Dagger-Hilt
 - ViewModel <br>
 
 ![Screenshot_2](https://user-images.githubusercontent.com/83671296/233418216-a4f0a3fb-1721-4804-ace4-41ec78bb02c7.png)
