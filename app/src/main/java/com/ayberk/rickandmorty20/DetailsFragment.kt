@@ -6,18 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.ayberk.rickandmorty20.databinding.FragmentDetailsBinding
-import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacter
-import com.ayberk.rickandmorty20.models.AnaCharacter.SingilurCharacterItem
 import com.ayberk.rickandmorty20.viewmodel.CharacterDetailsViewModel
-
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
@@ -25,14 +21,8 @@ class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CharacterDetailsViewModel by viewModels()
-    lateinit var characterDetailList : SingilurCharacterItem
     private lateinit var navController: NavController
     private val argument: DetailsFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,39 +52,6 @@ class DetailsFragment : Fragment() {
         binding.backbtn.setOnClickListener {
             navController.popBackStack()
         }
-        var last=""
-       /* viewModel.getObserverLiveData().observe(viewLifecycleOwner, object : Observer<SingilurCharacter> {
-
-            override fun onChanged(t: SingilurCharacter?) {
-
-                if (t != null) {
-
-                        binding.txtStatus.text = characterDetailList.status
-                        binding.txtGender.text = characterDetailList.gender
-                        binding.txtSpecy.text = characterDetailList.species
-                        binding.txtName.text = characterDetailList.name
-                        binding.txtOrigin.text = characterDetailList.origin.name
-                        binding.txtLocation.text = characterDetailList.location.name
-
-
-
-                }
-
-            }
-        }) */
-
         return view
     }
-
-    fun fetchCharacters(id:Int){
-
-        CoroutineScope(Dispatchers.Main).launch {
-
-            val job1 : Deferred<Unit> = async {
-                viewModel.loadCharacterData(id.toString())
-            }
-            job1.await()
-        }
-    }
-
 }

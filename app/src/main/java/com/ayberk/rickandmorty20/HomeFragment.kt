@@ -1,12 +1,14 @@
 package com.ayberk.rickandmorty20
 
 import android.app.ProgressDialog
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +35,7 @@ class HomeFragment : Fragment() {
     private val viewModel: HomePageViewModel by viewModels()
     lateinit var locationList : com.ayberk.rickandmorty20.models.ResultX
     lateinit var progressDialog: ProgressDialog
+    private var selectedPosition = 0
 
     private var lastCharId = ""
     var charId: String="0"
@@ -52,6 +55,9 @@ class HomeFragment : Fragment() {
         progressDialog.setCancelable(false) // blocks UI interaction
         progressDialog.show()
 
+
+
+
         return view
     }
 
@@ -68,7 +74,6 @@ class HomeFragment : Fragment() {
                 if (t != null) {
                     characterAdapter.setLists(t)
 
-                   // println(t)
                 }
                 if (lastCharId != charId) {
                     fetchCharacters(charId)
@@ -84,33 +89,23 @@ class HomeFragment : Fragment() {
             override fun onChanged(t: com.ayberk.rickandmorty20.models.LocationX?) {
 
                 if (t != null) {
-                    locationAdapter.setLists(t.results)
-
+                    val btnLocation = view.findViewById<Button>(R.id.locaitonbtn)
                     arguments?.let {
 
                         val locationPosition = HomeFragmentArgs.fromBundle(it).locationId
                         locationList = t.results[locationPosition]
+
                         for (residentUrl in t.results[locationPosition].residents) {
                             val uri = Uri.parse(residentUrl)
                             val id = uri.lastPathSegment
                             charId += id + ","
-
                         }
-                        println(lastCharId)
-                        println(charId)
-                        if (lastCharId > charId) {
-                            fetchCharacters(charId)
-                            lastCharId = charId
-                        }
-
                     }
-                    println(t)
+                    locationAdapter.setLists(t.results)
                 }
                 progressDialog.hide()
             }
         })
-
-
 
     }
 
@@ -137,7 +132,6 @@ class HomeFragment : Fragment() {
 
             val job1: Deferred<Unit> = async {
                 viewModel.loadCharacterData(charId)
-
 
             }
             val job2: Deferred<Unit> = async {

@@ -14,7 +14,6 @@ import javax.inject.Inject
 class HomePageViewModel @Inject constructor(private val repo: RetrofitRepository): ViewModel() {
 
     var charactersList : MutableLiveData<SingilurCharacter>
-
     var locationList : MutableLiveData<com.ayberk.rickandmorty20.models.LocationX>
 
 

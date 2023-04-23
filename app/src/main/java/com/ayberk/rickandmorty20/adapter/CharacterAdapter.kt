@@ -1,5 +1,6 @@
 package com.ayberk.rickandmorty20.adapter
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,7 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.MyCustomHolder>(){
         return MyCustomHolder(view)
     }
 
+
     override fun onBindViewHolder(holder: MyCustomHolder, position: Int) {
         holder.bind(liveData!!.get(position))
         val args = DetailsArguments(
@@ -48,6 +50,7 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.MyCustomHolder>(){
 
         }
     }
+
 
     override fun getItemCount(): Int {
         if(liveData == null){
@@ -98,5 +101,4 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.MyCustomHolder>(){
             notifyDataSetChanged()
         }
     }
-
 }
